@@ -6,7 +6,8 @@ import openai
 load_dotenv()
 
 app = Flask(__name__)
-openai.api_key = os.getenv('OPENAI_API_KEY')
+openai_api_key = os.getenv('OPENAI_API_KEY')
+client = openai.Client(api_key=openai_api_key)
 
 GENERATED_FILE = 'generated_site.html'
 
@@ -26,13 +27,13 @@ def generate():
     style = data.get('style', 'минимализм')
     prompt = PROMPT_TEMPLATE.format(style=style, desc=desc)
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4o",
             messages=[{"role": "user", "content": prompt}],
             max_tokens=2000,
             temperature=0.7
         )
-        html_code = response['choices'][0]['message']['content']
+        html_code = response.choices[0].message.content
         with open(GENERATED_FILE, 'w', encoding='utf-8') as f:
             f.write(html_code)
         return jsonify({'success': True})
