@@ -1,3 +1,5 @@
 Flask
 python-dotenv
-openai 
+openai
+Flask-Login
+Flask-SQLAlchemy 

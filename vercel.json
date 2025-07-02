@@ -5,8 +5,13 @@
   ],
   "routes": [
     { "src": "/static/(.*)", "dest": "/static/$1" },
-    { "src": "/img/(.*)", "dest": "/img/$1" },
-    { "src": "/favicon.ico", "dest": "/img/extension_icon.png" },
+    { "src": "/public/static/(.*)", "dest": "/public/static/$1" },
+    { "src": "/public/img/(.*)", "dest": "/public/img/$1" },
+    { "src": "/img/(.*)", "dest": "/public/img/$1" },
+    { "src": "/favicon.ico", "dest": "/public/img/extension_icon.png" },
+    { "src": "/about", "dest": "/app.py" },
+    { "src": "/features", "dest": "/app.py" },
+    { "src": "/contacts", "dest": "/app.py" },
     { "src": "/$", "dest": "/app.py" },
     { "src": "/(.*)", "dest": "/app.py" }
   ]

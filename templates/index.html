@@ -5,10 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Генератор сайтов на GPT-4</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="/public/static/style.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='extension_icon.png') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
+<!-- Компактная премиальная шапка -->
+<header class="header-glass-premium fixed-top animate__animated animate__fadeInDown">
+  <div class="container-fluid d-flex align-items-center justify-content-between py-2 px-3 flex-wrap">
+    <div class="d-flex align-items-center gap-3">
+      <div class="header-logo-premium d-flex align-items-center justify-content-center me-2 animate__animated animate__fadeInLeft animate__delay-1s">
+        <i class="fa-solid fa-robot fa-lg text-primary"></i>
+      </div>
+      <div class="d-flex flex-column animate__animated animate__fadeInLeft animate__delay-2s">
+        <span class="fw-bold text-gradient-premium mb-0">GPT-4 Генератор</span>
+        <span class="text-secondary small lh-1 d-flex align-items-center gap-1"><i class="fa-solid fa-bolt text-warning"></i> GPT-4, генерация сайтов за 10 секунд, бесплатно</span>
+      </div>
+    </div>
+    <nav class="header-menu d-none d-md-flex gap-3 ms-3 animate__animated animate__fadeIn animate__delay-3s">
+      <a href="/about" class="header-link">О сервисе</a>
+      <a href="/features" class="header-link">Преимущества</a>
+      <a href="/contacts" class="header-link">Контакты</a>
+    </nav>
+    <div class="d-flex align-items-center gap-2 ms-auto animate__animated animate__fadeInRight animate__delay-2s" style="padding-right: 10px;">
+      {% if current_user.is_authenticated %}
+        <span class="me-2 d-none d-md-inline text-dark-emphasis">👋 {{ current_user.email }}</span>
+        <a href="/logout" class="btn btn-outline-danger btn-sm px-3 premium-btn-shadow"><i class="fa-solid fa-right-from-bracket me-1"></i>Выйти</a>
+      {% else %}
+        <button class="btn btn-premium-outline btn-sm px-3 premium-btn-shadow" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa-solid fa-right-to-bracket me-1"></i>Войти</button>
+        <button class="btn btn-premium-gradient btn-sm px-3 premium-btn-shadow" data-bs-toggle="modal" data-bs-target="#registerModal"><i class="fa-solid fa-user-plus me-1"></i>Регистрация</button>
+      {% endif %}
+    </div>
+  </div>
+</header>
+<div style="height: 62px;"></div>
+<!-- /шапка -->
 <div class="background-svg">
     <svg class="svg-left" viewBox="0 0 300 900" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M0,0 Q150,200 0,400 Q150,600 0,900 L0,0 Z" fill="#e0f2fe"/>
@@ -159,6 +190,109 @@
     </div>
   </div>
 </div>
+<!-- Модальное окно входа (премиум, улучшено) -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content glass-modal animate__animated animate__fadeInDown">
+      <div class="modal-header border-0 flex-column align-items-center bg-gradient-premium position-relative" style="padding-bottom: 0;">
+        <div class="modal-avatar mb-2 d-flex align-items-center justify-content-center">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="28" cy="28" r="28" fill="#e0f2fe"/>
+            <path d="M28 32c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z" fill="#38bdf8"/>
+            <circle cx="28" cy="22" r="6" fill="#38bdf8"/>
+          </svg>
+        </div>
+        <h5 class="modal-title w-100 text-center text-dark fw-bold mb-0 mt-1" id="loginModalLabel">
+          Вход в аккаунт
+        </h5>
+        <div class="w-100 text-center text-secondary small mb-2 mt-1">Добро пожаловать! Введите свои данные для входа</div>
+        <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body p-4 pt-3">
+        <form method="POST" action="/login" autocomplete="off" novalidate>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <div class="alert alert-danger py-2 animate__animated animate__shakeX">
+                {% for message in messages %}{{ message }}<br>{% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
+          <div class="mb-3 position-relative animate__animated animate__fadeInUp animate__delay-1s">
+            <label for="loginEmail" class="form-label fw-semibold">Email</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text"><i class="fa-solid fa-envelope text-primary"></i></span>
+              <input type="email" class="form-control glass-input" id="loginEmail" name="email" placeholder="Введите email" required autofocus>
+            </div>
+          </div>
+          <div class="mb-3 position-relative animate__animated animate__fadeInUp animate__delay-2s">
+            <label for="loginPassword" class="form-label fw-semibold">Пароль</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text"><i class="fa-solid fa-lock text-primary"></i></span>
+              <input type="password" class="form-control glass-input" id="loginPassword" name="password" placeholder="Введите пароль" required>
+              <span class="input-group-text password-toggle" onclick="togglePassword('loginPassword', this)"><i class="fa-regular fa-eye"></i></span>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-premium w-100 py-2 mt-2 shadow-sm fw-bold animate__animated animate__fadeInUp animate__delay-3s">Войти</button>
+        </form>
+      </div>
+      <div class="modal-footer border-0 justify-content-center bg-light rounded-bottom-4 mt-0 pt-2">
+        <span class="small">Нет аккаунта? <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#registerModal">Зарегистрироваться</a></span>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Модальное окно регистрации (премиум, улучшено) -->
+<div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content glass-modal animate__animated animate__fadeInDown">
+      <div class="modal-header border-0 flex-column align-items-center bg-gradient-premium position-relative" style="padding-bottom: 0;">
+        <div class="modal-avatar mb-2 d-flex align-items-center justify-content-center">
+          <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="28" cy="28" r="28" fill="#f0fdf4"/>
+            <path d="M28 32c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5z" fill="#34d399"/>
+            <circle cx="28" cy="22" r="6" fill="#34d399"/>
+          </svg>
+        </div>
+        <h5 class="modal-title w-100 text-center text-dark fw-bold mb-0 mt-1" id="registerModalLabel">
+          Регистрация
+        </h5>
+        <div class="w-100 text-center text-secondary small mb-2 mt-1">Создайте бесплатный аккаунт за 10 секунд</div>
+        <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+      </div>
+      <div class="modal-body p-4 pt-3">
+        <form method="POST" action="/register" autocomplete="off" novalidate>
+          {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              <div class="alert alert-danger py-2 animate__animated animate__shakeX">
+                {% for message in messages %}{{ message }}<br>{% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
+          <div class="mb-3 position-relative animate__animated animate__fadeInUp animate__delay-1s">
+            <label for="registerEmail" class="form-label fw-semibold">Email</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text"><i class="fa-solid fa-envelope text-success"></i></span>
+              <input type="email" class="form-control glass-input" id="registerEmail" name="email" placeholder="Введите email" required>
+            </div>
+          </div>
+          <div class="mb-3 position-relative animate__animated animate__fadeInUp animate__delay-2s">
+            <label for="registerPassword" class="form-label fw-semibold">Пароль</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text"><i class="fa-solid fa-lock text-success"></i></span>
+              <input type="password" class="form-control glass-input" id="registerPassword" name="password" placeholder="Придумайте пароль" required>
+              <span class="input-group-text password-toggle" onclick="togglePassword('registerPassword', this)"><i class="fa-regular fa-eye"></i></span>
+            </div>
+            <div class="form-text">Минимум 6 символов, используйте буквы и цифры</div>
+          </div>
+          <button type="submit" class="btn btn-premium-green w-100 py-2 mt-2 shadow-sm fw-bold animate__animated animate__fadeInUp animate__delay-3s">Зарегистрироваться</button>
+        </form>
+      </div>
+      <div class="modal-footer border-0 justify-content-center bg-light rounded-bottom-4 mt-0 pt-2">
+        <span class="small">Уже есть аккаунт? <a href="#" data-bs-dismiss="modal" data-bs-toggle="modal" data-bs-target="#loginModal">Войти</a></span>
+      </div>
+    </div>
+  </div>
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
@@ -243,6 +377,90 @@ function insertPrompt(text) {
     document.getElementById('description').value = text;
     document.getElementById('description').focus();
 }
+
+function togglePassword(inputId, el) {
+  const input = document.getElementById(inputId);
+  const icon = el.querySelector('i');
+  if (input.type === 'password') {
+    input.type = 'text';
+    icon.classList.remove('fa-eye');
+    icon.classList.add('fa-eye-slash');
+  } else {
+    input.type = 'password';
+    icon.classList.remove('fa-eye-slash');
+    icon.classList.add('fa-eye');
+  }
+}
+
+// Анимация появления и исчезновения модальных окон с корректным закрытием
+function setupAnimatedModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (!modal) return;
+  const dialog = modal.querySelector('.modal-dialog');
+  let closing = false;
+
+  // Появление
+  modal.addEventListener('show.bs.modal', function () {
+    dialog.classList.remove('animate__fadeOutUp');
+    dialog.classList.add('animate__animated', 'animate__fadeInDown');
+    closing = false;
+  });
+
+  // Кастомное закрытие с анимацией
+  function closeWithAnimation() {
+    if (closing) return;
+    closing = true;
+    dialog.classList.remove('animate__fadeInDown');
+    dialog.classList.add('animate__fadeOutUp');
+    setTimeout(() => {
+      const modalInstance = bootstrap.Modal.getInstance(modal);
+      if (modalInstance) modalInstance.hide();
+    }, 500);
+  }
+
+  // Клик по крестику
+  const closeBtn = modal.querySelector('.btn-close');
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function (e) {
+      e.preventDefault();
+      closeWithAnimation();
+    });
+  }
+
+  // Клик по фону (backdrop)
+  modal.addEventListener('mousedown', function (e) {
+    if (e.target === modal) {
+      closeWithAnimation();
+    }
+  });
+
+  // Обычное закрытие (например, по esc)
+  modal.addEventListener('hide.bs.modal', function (e) {
+    if (!closing) {
+      e.preventDefault();
+      closeWithAnimation();
+    }
+  });
+
+  // После закрытия сбрасываем анимацию
+  modal.addEventListener('hidden.bs.modal', function () {
+    dialog.classList.remove('animate__animated', 'animate__fadeOutUp');
+    closing = false;
+  });
+}
+setupAnimatedModal('loginModal');
+setupAnimatedModal('registerModal');
+
+// Плавное уменьшение высоты и усиление blur/тени шапки при скролле
+window.addEventListener('scroll', function() {
+  const header = document.querySelector('.header-glass-premium');
+  if (!header) return;
+  if (window.scrollY > 10) {
+    header.classList.add('scrolled');
+  } else {
+    header.classList.remove('scrolled');
+  }
+});
 </script>
 <style>
 .pay-modal-content {
