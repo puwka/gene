@@ -1,0 +1,262 @@
+/* --- Основные стили about --- */
+.about-hero {
+    background: linear-gradient(135deg, #f8fafc 0%, #e0f2fe 100%);
+    border-radius: 1.5rem;
+    padding: 3rem 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 8px 32px rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(224, 242, 254, 0.5);
+}
+
+.about-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(59, 130, 246, 0.1);
+    border-radius: 50%;
+    color: #3b82f6;
+}
+
+.about-features {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
+}
+
+.about-stats {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 3rem 0;
+}
+
+.stat-item {
+    text-align: center;
+    min-width: 150px;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: 800;
+    background: linear-gradient(90deg, #3b82f6 30%, #06b6d4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 0.5rem;
+}
+
+.stat-label {
+    font-size: 1rem;
+    color: #4b5563;
+}
+
+.about-tech {
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 1rem;
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 1px solid rgba(224, 242, 254, 0.7);
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.tech-item {
+    text-align: center;
+    padding: 1rem;
+    border-radius: 0.8rem;
+    transition: all 0.3s;
+}
+
+.tech-item:hover {
+    background: rgba(224, 242, 254, 0.3);
+    transform: translateY(-3px);
+}
+
+.tech-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    color: #3b82f6;
+}
+
+.about-timeline {
+    position: relative;
+    padding-left: 2rem;
+    margin: 3rem 0;
+}
+
+.timeline-item {
+    position: relative;
+    padding-bottom: 2rem;
+    padding-left: 2rem;
+}
+
+.timeline-item:last-child {
+    padding-bottom: 0;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -6px;
+    top: 0;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #3b82f6;
+    z-index: 1;
+}
+
+.timeline-item::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: #e0f2fe;
+}
+
+.timeline-date {
+    font-weight: 600;
+    color: #3b82f6;
+    margin-bottom: 0.5rem;
+}
+
+.timeline-content {
+    background: rgba(255, 255, 255, 0.8);
+    padding: 1rem;
+    border-radius: 0.8rem;
+    border: 1px solid rgba(224, 242, 254, 0.7);
+}
+
+/* Фиксированные боковые панели */
+.sidebar-left, .sidebar-right {
+    position: sticky;
+    top: 80px;
+    height: calc(100vh - 100px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    z-index: 10;
+}
+
+.sidebar-left::-webkit-scrollbar, 
+.sidebar-right::-webkit-scrollbar {
+    width: 5px;
+}
+
+.sidebar-left::-webkit-scrollbar-track, 
+.sidebar-right::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.sidebar-left::-webkit-scrollbar-thumb, 
+.sidebar-right::-webkit-scrollbar-thumb {
+    background: #3b82f6;
+    border-radius: 5px;
+}
+
+/* Адаптивность */
+@media (max-width: 1400px) {
+    .sidebar-left, .sidebar-right {
+        display: none !important;
+    }
+    .main-content {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 992px) {
+    .about-hero {
+        padding: 2rem 1.5rem;
+    }
+    
+    .about-features {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+    
+    .about-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+}
+
+@media (max-width: 768px) {
+    .about-hero {
+        padding: 1.5rem 1rem;
+        border-radius: 1rem;
+    }
+    
+    .tech-grid {
+        grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+    }
+}
+
+@media (max-width: 576px) {
+    .about-hero {
+        padding: 1.5rem 1rem;
+    }
+    
+    .stat-item {
+        min-width: 120px;
+    }
+}
+
+/* Стили для новых элементов правой панели */
+.update-item {
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: background 0.2s;
+}
+
+.update-item:hover {
+    background: #f8fafc;
+}
+
+.user-activity {
+    border-top: 1px solid #e5e7eb;
+    padding-top: 0.5rem;
+}
+
+.user-avatar {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: rgba(59, 130, 246, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #3b82f6;
+    font-size: 0.8rem;
+}
+
+.progress {
+    background-color: #e5e7eb;
+    border-radius: 3px;
+}
+
+.progress-bar {
+    border-radius: 3px;
+}
+
+/* Фиксированные боковые панели */
+.sidebar-left, .sidebar-right {
+    position: sticky;
+    top: 82px; /* Высота шапки (62px) + отступ (20px) */
+    height: calc(100vh - 102px);
+    overflow-y: auto;
+    scrollbar-width: thin;
+    z-index: 10;
+    align-self: flex-start;
+}
+
+/* Остальные стили для панелей остаются без изменений */

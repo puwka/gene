@@ -2,21 +2,430 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>О сервисе | GPT-4 Генератор</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>О сервисе | GenSite</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/contacts.css">
+    <link rel="stylesheet" href="/static/about.css">
+    <link rel="icon" href="/public/img/extension_icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <div class="container mt-5 pt-4">
-        <h1 class="fw-bold mb-3"><i class="fa-solid fa-robot text-primary me-2"></i>О сервисе</h1>
-        <p class="lead">GPT-4 Генератор — это современный AI-сервис для мгновенной генерации адаптивных сайтов по вашему описанию. Используется мощь GPT-4 для создания уникального HTML-кода за секунды.</p>
-        <ul class="list-unstyled mt-4 mb-5">
-            <li class="mb-2"><i class="fa-solid fa-bolt text-warning me-2"></i>Молниеносная генерация сайтов</li>
-            <li class="mb-2"><i class="fa-solid fa-mobile-screen-button text-success me-2"></i>Адаптивная вёрстка для всех устройств</li>
-            <li class="mb-2"><i class="fa-solid fa-palette text-info me-2"></i>Современный дизайн и кастомизация</li>
-            <li class="mb-2"><i class="fa-solid fa-lock text-secondary me-2"></i>Безопасность и приватность</li>
-        </ul>
-        <a href="/" class="btn btn-premium-gradient"><i class="fa-solid fa-arrow-left me-1"></i>На главную</a>
+<!-- Компактная премиальная шапка -->
+<header class="header-glass-premium fixed-top">
+  <div class="container-fluid d-flex align-items-center justify-content-between py-2 px-3 flex-wrap">
+    <div class="d-flex align-items-center gap-3">
+      <div class="header-logo-premium d-flex align-items-center justify-content-center me-2">
+        <i class="fa-solid fa-robot fa-lg text-primary"></i>
+      </div>
+      <div class="d-flex flex-column">
+        <span class="fw-bold text-gradient-premium mb-0">GenSite</span>
+        <span class="text-secondary small lh-1 d-flex align-items-center gap-1">
+          <i class="fa-solid fa-bolt text-warning"></i> GenSite, генерация сайтов за 10 секунд, бесплатно
+        </span>
+      </div>
     </div>
+    <nav class="header-menu d-flex gap-3 ms-1">
+      <a href="/about" class="header-link">О сервисе</a>
+      <a href="/features" class="header-link">Преимущества</a>
+      <a href="/contacts" class="header-link">Контакты</a>
+      <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
+      <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
+    </nav>
+  </div>
+</header>
+<div style="height: 62px;"></div>
+<!-- /шапка -->
+
+<!-- SVG фон как на главной -->
+<div class="background-svg">
+    <svg class="svg-left" viewBox="0 0 300 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 Q150,200 0,400 Q150,600 0,900 L0,0 Z" fill="#e0f2fe"/>
+    </svg>
+    <svg class="svg-right" viewBox="0 0 300 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M300,0 Q150,200 300,400 Q150,600 300,900 L300,0 Z" fill="#f0fdf4"/>
+    </svg>
+</div>
+
+<div class="main-layout d-flex flex-row justify-content-center align-items-start">
+    <!-- Левая панель -->
+    <aside class="sidebar-left d-none d-lg-flex flex-column align-items-end pe-3">
+        <div class="sidebar-block mb-4 animate__animated animate__fadeInLeft">
+            <h6 class="fw-bold mb-2"><i class="fa-solid fa-lightbulb me-1 text-warning"></i>Советы по использованию</h6>
+            <ul class="tips-list small">
+                <li class="mb-2">Опишите сайт максимально подробно</li>
+                <li class="mb-2">Укажите желаемые цвета и стиль</li>
+                <li class="mb-2">Добавьте ключевые элементы (меню, галерея и т.д.)</li>
+                <li class="mb-2">Используйте примеры для лучшего результата</li>
+                <li>Экспериментируйте с разными формулировками</li>
+            </ul>
+        </div>
+        <div class="sidebar-block animate__animated animate__fadeInLeft animate__delay-1s">
+            <h6 class="fw-bold mb-2"><i class="fa-solid fa-rocket me-1 text-primary"></i>Как начать?</h6>
+            <div>
+                <ol class="small mb-0">
+                    <li class="mb-2">Зарегистрируйтесь (это бесплатно)</li>
+                    <li class="mb-2">Опишите ваш идеальный сайт</li>
+                    <li class="mb-2">Нажмите "Сгенерировать"</li>
+                    <li>Скачайте или отредактируйте результат</li>
+                </ol>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Центральный блок -->
+    <main class="main-content flex-grow-1">
+        <!-- Герой-секция -->
+        <section class="about-hero text-center animate__animated animate__fadeIn">
+            <div class="about-icon mb-3">
+                <i class="fa-solid fa-robot fa-3x text-primary"></i>
+            </div>
+            <h1 class="section-title mb-2">О сервисе GenSite</h1>
+            <p class="lead text-secondary mb-4">Современный AI-инструмент для мгновенного создания адаптивных сайтов по вашему описанию. Просто расскажите, что вам нужно — и получите готовый код за 10 секунд!</p>
+            
+            <div class="about-features d-flex flex-wrap justify-content-center gap-3">
+                <div class="contacts-card h-100 text-center d-flex flex-column align-items-center">
+                    <div class="contacts-card-icon bg-primary-light mx-auto mb-2 d-flex align-items-center justify-content-center" style="margin-left:auto;margin-right:auto;">
+                        <i class="fa-solid fa-bolt text-primary"></i>
+                    </div>
+                    <h3 class="contacts-card-title">Молниеносная генерация</h3>
+                    <div class="contacts-card-content">
+                        <p>Создайте сайт за 10 секунд — быстрее, чем когда-либо!</p>
+                    </div>
+                </div>
+                <div class="contacts-card h-100 text-center d-flex flex-column align-items-center">
+                    <div class="contacts-card-icon bg-success-light mx-auto mb-2 d-flex align-items-center justify-content-center" style="margin-left:auto;margin-right:auto;">
+                        <i class="fa-solid fa-mobile-screen-button text-success"></i>
+                    </div>
+                    <h3 class="contacts-card-title">Адаптивный дизайн</h3>
+                    <div class="contacts-card-content">
+                        <p>Идеальное отображение на любом устройстве</p>
+                    </div>
+                </div>
+                <div class="contacts-card h-100 text-center d-flex flex-column align-items-center">
+                    <div class="contacts-card-icon bg-info-light mx-auto mb-2 d-flex align-items-center justify-content-center" style="margin-left:auto;margin-right:auto;">
+                        <i class="fa-solid fa-palette text-info"></i>
+                    </div>
+                    <h3 class="contacts-card-title">AI-дизайн</h3>
+                    <div class="contacts-card-content">
+                        <p>Современный внешний вид и структура сайта</p>
+                    </div>
+                </div>
+                <div class="contacts-card h-100 text-center d-flex flex-column align-items-center">
+                    <div class="contacts-card-icon bg-warning-light mx-auto mb-2 d-flex align-items-center justify-content-center" style="margin-left:auto;margin-right:auto;">
+                        <i class="fa-solid fa-lock text-warning"></i>
+                    </div>
+                    <h3 class="contacts-card-title">Безопасность</h3>
+                    <div class="contacts-card-content">
+                        <p>Ваши данные не сохраняются и не передаются</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Статистика -->
+        <section class="text-center animate__animated animate__fadeIn animate__delay-1s">
+            <h2 class="section-subtitle mb-4"><i class="fa-solid fa-chart-line me-2"></i>Наша статистика</h2>
+            <div class="about-stats">
+                <div class="stat-item">
+                    <div class="stat-number">1,000+</div>
+                    <div class="stat-label">Пользователей</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3,000+</div>
+                    <div class="stat-label">Созданных сайтов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Довольных клиентов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Доступность сервиса</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Технологии -->
+        <section class="about-tech animate__animated animate__fadeIn animate__delay-1s">
+            <h2 class="section-subtitle mb-3"><i class="fa-solid fa-microchip me-2"></i>Используемые технологии</h2>
+            <p>GenSite использует передовые технологии искусственного интеллекта и веб-разработки для создания идеальных сайтов:</p>
+            
+            <div class="tech-grid">
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fa-brands fa-react"></i></div>
+                    <div>React</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fa-brands fa-node-js"></i></div>
+                    <div>Node.js</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fa-solid fa-brain"></i></div>
+                    <div>GPT-4</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fa-brands fa-bootstrap"></i></div>
+                    <div>Bootstrap 5</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fa-brands fa-python"></i></div>
+                    <div>Python</div>
+                </div>
+                <div class="tech-item">
+                    <div class="tech-icon"><i class="fa-solid fa-database"></i></div>
+                    <div>MongoDB</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- История развития -->
+        <section class="animate__animated animate__fadeIn animate__delay-2s">
+            <h2 class="section-subtitle mb-4"><i class="fa-solid fa-timeline me-2"></i>История развития</h2>
+            <div class="about-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Январь 2022</div>
+                    <div class="timeline-content">
+                        <h5>Идея и первые наработки</h5>
+                        <p>Создание концепции AI-генератора сайтов и первые прототипы на базе GPT-3.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Июнь 2022</div>
+                    <div class="timeline-content">
+                        <h5>Закрытое бета-тестирование</h5>
+                        <p>Привлечены первые 100 бета-тестеров, собраны отзывы и улучшения.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Ноябрь 2022</div>
+                    <div class="timeline-content">
+                        <h5>Публичный запуск</h5>
+                        <p>Официальный релиз GenSite с базовым функционалом.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Март 2023</div>
+                    <div class="timeline-content">
+                        <h5>Интеграция GPT-4</h5>
+                        <p>Полное обновление AI-модели для более качественной генерации.</p>
+                    </div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Сентябрь 2023</div>
+                    <div class="timeline-content">
+                        <h5>1.0 Релиз</h5>
+                        <p>Добавлены новые функции: предпросмотр, экспорт и API.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ о сервисе -->
+        <section class="contacts-faq animate__animated animate__fadeIn animate__delay-2s">
+            <h2 class="section-subtitle mb-4"><i class="fa-solid fa-circle-question me-2"></i>Частые вопросы</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqHeading1">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="false" aria-controls="faqCollapse1">
+                            <i class="fa-solid fa-rocket me-2 text-primary"></i>Как работает генерация сайта?
+                        </button>
+                    </h3>
+                    <div id="faqCollapse1" class="accordion-collapse collapse" aria-labelledby="faqHeading1" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>GenSite использует мощь GPT-4 для анализа вашего описания и создания оптимального HTML/CSS/JS кода:</p>
+                            <ol>
+                                <li>Вы описываете желаемый сайт (структура, стиль, функционал)</li>
+                                <li>AI анализирует запрос и генерирует код</li>
+                                <li>Вы получаете готовый сайт с возможностью предпросмотра</li>
+                                <li>Можно скачать код или продолжить редактирование</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqHeading2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                            <i class="fa-solid fa-shield-halved me-2 text-primary"></i>Безопасно ли использовать сервис?
+                        </button>
+                    </h3>
+                    <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>Да, безопасность и конфиденциальность — наш приоритет:</p>
+                            <ul>
+                                <li>Все соединения защищены SSL/TLS шифрованием</li>
+                                <li>Ваши данные не сохраняются после генерации</li>
+                                <li>Сервис не требует доступа к вашим файлам</li>
+                                <li>Регулярные аудиты безопасности</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqHeading3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                            <i class="fa-solid fa-wand-magic-sparkles me-2 text-primary"></i>Можно ли кастомизировать сайт?
+                        </button>
+                    </h3>
+                    <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>Да, вы можете:</p>
+                            <ul>
+                                <li>Указать любые пожелания к дизайну и структуре</li>
+                                <li>Выбрать цветовую схему и шрифты</li>
+                                <li>Добавить конкретные элементы (формы, галереи и т.д.)</li>
+                                <li>Редактировать сгенерированный код вручную</li>
+                                <li>Использовать шаблоны для вдохновения</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqHeading4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                            <i class="fa-solid fa-coins me-2 text-primary"></i>Сколько стоит использование?
+                        </button>
+                    </h3>
+                    <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>GenSite предлагает гибкую систему тарифов:</p>
+                            <ul>
+                                <li><strong>Бесплатный:</strong> 5 генераций в день, базовые функции</li>
+                                <li><strong>Pro ($9/мес):</strong> 50 генераций в день, расширенные настройки</li>
+                                <li><strong>Business ($29/мес):</strong> Неограниченная генерация, приоритетная поддержка</li>
+                                <li><strong>Enterprise:</strong> Индивидуальные решения для компаний</li>
+                            </ul>
+                            <a href="#" class="btn btn-sm btn-primary mt-2">Сравнить тарифы</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Кнопка возврата -->
+        <div class="text-center mt-5">
+            <a href="/" class="btn btn-outline-primary btn-lg px-5">
+                <i class="fa-solid fa-arrow-left me-2"></i>Вернуться на главную
+            </a>
+        </div>
+    </main>
+
+        <!-- Правая панель -->
+        <aside class="sidebar-right d-none d-xl-flex flex-column align-items-start ps-3">
+            <div class="sidebar-block mb-4 animate__animated animate__fadeInRight">
+                <h6 class="fw-bold mb-2"><i class="fa-solid fa-chart-pie me-1 text-info"></i>Статистика генераций</h6>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span>Лендинги</span>
+                        <span class="fw-bold">42%</span>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-primary" role="progressbar" style="width: 42%"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span>Интернет-магазины</span>
+                        <span class="fw-bold">28%</span>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 28%"></div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span>Блоги</span>
+                        <span class="fw-bold">18%</span>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: 18%"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="d-flex justify-content-between small mb-1">
+                        <span>Другое</span>
+                        <span class="fw-bold">12%</span>
+                    </div>
+                    <div class="progress" style="height: 6px;">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 12%"></div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="sidebar-block animate__animated animate__fadeInRight animate__delay-2s">
+                <h6 class="fw-bold mb-2"><i class="fa-solid fa-user-clock me-1 text-warning"></i>Активность пользователей</h6>
+                <div class="user-activity mb-3">
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="user-avatar me-2">
+                            <i class="fa-solid fa-user text-primary"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between small">
+                                <span class="fw-bold">Александр К.</span>
+                            </div>
+                            <div class="small text-truncate">Сгенерировал сайт для кафе</div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center mb-2">
+                        <div class="user-avatar me-2">
+                            <i class="fa-solid fa-user text-success"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between small">
+                                <span class="fw-bold">Елена С.</span>
+                            </div>
+                            <div class="small text-truncate">Создала блог о путешествиях</div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center">
+                        <div class="user-avatar me-2">
+                            <i class="fa-solid fa-user text-danger"></i>
+                        </div>
+                        <div class="flex-grow-1">
+                            <div class="d-flex justify-content-between small">
+                                <span class="fw-bold">Дмитрий П.</span>
+                            </div>
+                            <div class="small text-truncate">Запустил интернет-магазин</div>
+                        </div>
+                    </div>
+                </div>
+                <a href="#" class="btn btn-sm btn-outline-primary w-100">
+                    <i class="fa-solid fa-users me-1"></i>Все пользователи
+                </a>
+            </div>
+        </aside>
+</div>
+
+<!-- Подключаем скрипты -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
+<script>
+    // Плавная прокрутка к якорям
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault()
+            const target = document.querySelector(this.getAttribute('href'))
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 80,
+                    behavior: 'smooth'
+                })
+            }
+        })
+    })
+    
+    // Фиксация боковых панелей при скролле (упрощенная версия)
+    window.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('.header-glass-premium')
+        const headerHeight = header ? header.offsetHeight : 62
+        
+        // Устанавливаем правильный top для панелей
+        document.querySelectorAll('.sidebar-left, .sidebar-right').forEach(sidebar => {
+            sidebar.style.top = `${headerHeight + 20}px`
+            sidebar.style.height = `calc(100vh - ${headerHeight + 20}px)`
+        })
+    })
+    </script>
 </body>
-</html> 
+</html>

@@ -2,21 +2,280 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Преимущества | GPT-4 Генератор</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Преимущества | GenSite</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/features.css">
+    <link rel="icon" href="/public/img/extension_icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <div class="container mt-5 pt-4">
-        <h1 class="fw-bold mb-3"><i class="fa-solid fa-star text-success me-2"></i>Преимущества</h1>
-        <ul class="list-group list-group-flush mb-5">
-            <li class="list-group-item"><i class="fa-solid fa-rocket text-primary me-2"></i>Быстрая генерация сайтов</li>
-            <li class="list-group-item"><i class="fa-solid fa-wand-magic-sparkles text-info me-2"></i>AI-дизайн и уникальность</li>
-            <li class="list-group-item"><i class="fa-solid fa-mobile text-warning me-2"></i>Адаптивность под любые устройства</li>
-            <li class="list-group-item"><i class="fa-solid fa-download text-success me-2"></i>Возможность скачать HTML</li>
-            <li class="list-group-item"><i class="fa-solid fa-user-shield text-secondary me-2"></i>Безопасность и приватность</li>
-        </ul>
-        <a href="/" class="btn btn-premium-gradient"><i class="fa-solid fa-arrow-left me-1"></i>На главную</a>
+<!-- Компактная премиальная шапка -->
+<header class="header-glass-premium fixed-top">
+  <div class="container-fluid d-flex align-items-center justify-content-between py-2 px-3 flex-wrap">
+    <div class="d-flex align-items-center gap-3">
+      <div class="header-logo-premium d-flex align-items-center justify-content-center me-2">
+        <i class="fa-solid fa-robot fa-lg text-primary"></i>
+      </div>
+      <div class="d-flex flex-column">
+        <span class="fw-bold text-gradient-premium mb-0">GenSite</span>
+        <span class="text-secondary small lh-1 d-flex align-items-center gap-1">
+          <i class="fa-solid fa-bolt text-warning"></i> GenSite, генерация сайтов за 10 секунд, бесплатно
+        </span>
+      </div>
     </div>
+    <nav class="header-menu d-flex gap-3 ms-1">
+      <a href="/about" class="header-link">О сервисе</a>
+      <a href="/features" class="header-link active">Преимущества</a>
+      <a href="/contacts" class="header-link">Контакты</a>
+      <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
+      <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
+    </nav>
+  </div>
+</header>
+<div style="height: 62px;"></div>
+<!-- /шапка -->
+
+<!-- SVG фон как на главной -->
+<div class="background-svg">
+    <svg class="svg-left" viewBox="0 0 300 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 Q150,200 0,400 Q150,600 0,900 L0,0 Z" fill="#e0f2fe"/>
+    </svg>
+    <svg class="svg-right" viewBox="0 0 300 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M300,0 Q150,200 300,400 Q150,600 300,900 L300,0 Z" fill="#f0fdf4"/>
+    </svg>
+</div>
+
+<div class="main-layout d-flex flex-row justify-content-center align-items-start">
+    <!-- Левая панель -->
+    <aside class="sidebar-left d-none d-lg-flex flex-column align-items-end pe-3">
+        <div class="sidebar-block mb-4 animate__animated animate__fadeInLeft">
+            <h6 class="fw-bold mb-2"><i class="fa-solid fa-lightbulb me-1 text-warning"></i>Советы по выбору</h6>
+            <ul class="tips-list small">
+                <li>Используйте AI-дизайн для уникального стиля</li>
+                <li>Скачивайте HTML для полного контроля</li>
+                <li>Используйте адаптивные шаблоны для мобильных</li>
+            </ul>
+        </div>
+        <div class="sidebar-block animate__animated animate__fadeInLeft animate__delay-1s">
+            <h6 class="fw-bold mb-2"><i class="fa-solid fa-chart-line me-1 text-primary"></i>Статистика</h6>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-value text-primary">10 сек</div>
+                    <div class="stat-label">Среднее время генерации</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value text-success">98%</div>
+                    <div class="stat-label">Довольных клиентов</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value text-warning">3000+</div>
+                    <div class="stat-label">Созданных сайтов</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Центральный блок -->
+    <main class="main-content flex-grow-1">
+        <!-- Герой-секция -->
+        <section class="features-hero text-center animate__animated animate__fadeIn">
+            <div class="features-icon mb-3">
+                <i class="fa-solid fa-medal fa-3x text-primary"></i>
+            </div>
+            <h1 class="section-title mb-2">Наши преимущества</h1>
+            <p class="lead text-secondary mb-4">GenSite предлагает уникальные возможности для быстрого создания профессиональных сайтов с использованием искусственного интеллекта. Убедитесь сами!</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#" class="btn btn-primary btn-lg px-4" data-bs-toggle="modal" data-bs-target="#registerModal">
+                    <i class="fa-solid fa-rocket me-2"></i>Попробовать бесплатно
+                </a>
+                <a href="/contacts" class="btn btn-outline-primary btn-lg px-4">
+                    <i class="fa-solid fa-question me-2"></i>Задать вопрос
+                </a>
+            </div>
+        </section>
+
+        <!-- Основные преимущества -->
+        <section class="features-grid row g-4 mb-5 animate__animated animate__fadeIn animate__delay-1s">
+            <div class="col-md-6">
+                <div class="features-card h-100">
+                    <div class="features-card-icon bg-primary-light">
+                        <i class="fa-solid fa-bolt"></i>
+                    </div>
+                    <h3 class="features-card-title">Молниеносная скорость</h3>
+                    <div class="features-card-content">
+                        <p>Создавайте полноценные сайты всего за 10 секунд. Наш AI-движок оптимизирован для максимальной производительности.</p>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Генерация за 10 секунд</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Оптимизированный код</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Минимальная нагрузка</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="features-card h-100">
+                    <div class="features-card-icon bg-success-light">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                    <h3 class="features-card-title">Уникальный AI-дизайн</h3>
+                    <div class="features-card-content">
+                        <p>Каждый сайт получает индивидуальный дизайн, созданный нейросетью на основе ваших предпочтений.</p>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Адаптация под ваш бренд</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Автоматическая цветовая палитра</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Оптимальная типографика</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="features-card h-100">
+                    <div class="features-card-icon bg-warning-light">
+                        <i class="fa-solid fa-mobile-screen"></i>
+                    </div>
+                    <h3 class="features-card-title">Полная адаптивность</h3>
+                    <div class="features-card-content">
+                        <p>Идеальное отображение на любых устройствах - от смартфонов до широкоформатных мониторов.</p>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Адаптация под все экраны</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Touch-оптимизация</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Retina-поддержка</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="features-card h-100">
+                    <div class="features-card-icon bg-info-light">
+                        <i class="fa-solid fa-file-code"></i>
+                    </div>
+                    <h3 class="features-card-title">Чистый код</h3>
+                    <div class="features-card-content">
+                        <p>Получайте чистый, валидный и оптимизированный HTML/CSS код, готовый к использованию.</p>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Семантическая верстка</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Оптимизация для SEO</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Поддержка W3C</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="features-card h-100">
+                    <div class="features-card-icon bg-purple-light">
+                        <i class="fa-solid fa-shield-halved"></i>
+                    </div>
+                    <h3 class="features-card-title">Безопасность</h3>
+                    <div class="features-card-content">
+                        <p>Ваши данные защищены по высшим стандартам безопасности и конфиденциальности.</p>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check text-success me-2"></i>SSL-шифрование</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>GDPR-совместимость</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Отсутствие трекеров</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="features-card h-100">
+                    <div class="features-card-icon bg-pink-light">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3 class="features-card-title">Поддержка 24/7</h3>
+                    <div class="features-card-content">
+                        <p>Наша команда всегда готова помочь вам с любыми вопросами и проблемами.</p>
+                        <ul class="features-list">
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Чат-поддержка</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>Email-поддержка</li>
+                            <li><i class="fa-solid fa-check text-success me-2"></i>База знаний</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Как это работает -->
+        <section class="how-it-works mb-5 animate__animated animate__fadeIn animate__delay-2s">
+            <h2 class="section-subtitle mb-4"><i class="fa-solid fa-gears me-2"></i>Как это работает</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Выберите тип сайта</h3>
+                        <p>Укажите цель создания сайта: лендинг, блог, портфолио или интернет-магазин.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Настройте дизайн</h3>
+                        <p>Выберите цветовую схему, шрифты и стиль оформления или доверьте это AI.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Добавьте контент</h3>
+                        <p>Введите текст, загрузите изображения или используйте AI-генерацию контента.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Получите сайт</h3>
+                        <p>Через 10 секунд ваш сайт будет готов! Вы можете скачать код или опубликовать его.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Кнопка возврата -->
+        <div class="text-center mt-5">
+            <a href="/" class="btn btn-outline-primary btn-lg px-5">
+                <i class="fa-solid fa-arrow-left me-2"></i>Вернуться на главную
+            </a>
+        </div>
+    </main>
+
+    <!-- Правая панель -->
+    <aside class="sidebar-right d-none d-xl-flex flex-column align-items-start ps-3">
+        <div class="sidebar-block mb-4 animate__animated animate__fadeInRight">
+            <h6 class="fw-bold mb-2"><i class="fa-solid fa-users me-1 text-info"></i>Отзывы клиентов</h6>
+            <div class="testimonial mb-3">
+                <div class="testimonial-text">"Создал сайт для бизнеса за 10 минут! Раньше на это уходили недели."</div>
+                <div class="testimonial-author">— Иван Петров, владелец магазина</div>
+            </div>
+            <div class="testimonial mb-3">
+                <div class="testimonial-text">"Лучший инструмент для быстрого прототипирования. Пользуюсь ежедневно!"</div>
+                <div class="testimonial-author">— Мария Сидорова, дизайнер</div>
+            </div>
+            <div class="testimonial">
+                <div class="testimonial-text">"Сэкономил 50 000 рублей на разработке сайта. Сервис просто бомба!"</div>
+                <div class="testimonial-author">— Алексей Иванов, стартапер</div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<!-- Подключаем скрипты -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
+<script>
+// Плавная прокрутка к якорям
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault()
+        const target = document.querySelector(this.getAttribute('href'))
+        if (target) {
+            window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
+            })
+        }
+    })
+})
+</script>
 </body>
-</html> 
+</html>

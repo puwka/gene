@@ -2,33 +2,530 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>Контакты | GPT-4 Генератор</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Контакты | GenSite</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/contacts.css">
+    <link rel="icon" href="/public/img/extension_icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
-    <div class="container mt-5 pt-4">
-        <h1 class="fw-bold mb-3"><i class="fa-solid fa-envelope text-primary me-2"></i>Контакты</h1>
-        <div class="mb-4">
-            <p><i class="fa-solid fa-paper-plane me-2"></i>Email: <a href="mailto:support@gpt4gen.site">support@gpt4gen.site</a></p>
-            <p><i class="fa-solid fa-globe me-2"></i>Сайт: <a href="/">gpt4gen.site</a></p>
-        </div>
-        <form class="mb-5" method="post" action="#">
-            <div class="mb-3">
-                <label for="name" class="form-label">Имя</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
-            <div class="mb-3">
-                <label for="message" class="form-label">Сообщение</label>
-                <textarea class="form-control" id="message" name="message" rows="4" required></textarea>
-            </div>
-            <button type="submit" class="btn btn-premium-gradient"><i class="fa-solid fa-paper-plane me-1"></i>Отправить</button>
-        </form>
-        <a href="/" class="btn btn-outline-primary"><i class="fa-solid fa-arrow-left me-1"></i>На главную</a>
+<!-- Компактная премиальная шапка -->
+<header class="header-glass-premium fixed-top">
+  <div class="container-fluid d-flex align-items-center justify-content-between py-2 px-3 flex-wrap">
+    <div class="d-flex align-items-center gap-3">
+      <div class="header-logo-premium d-flex align-items-center justify-content-center me-2">
+        <i class="fa-solid fa-robot fa-lg text-primary"></i>
+      </div>
+      <div class="d-flex flex-column">
+        <span class="fw-bold text-gradient-premium mb-0">GenSite</span>
+        <span class="text-secondary small lh-1 d-flex align-items-center gap-1">
+          <i class="fa-solid fa-bolt text-warning"></i> GenSite, генерация сайтов за 10 секунд, бесплатно
+        </span>
+      </div>
     </div>
+    <nav class="header-menu d-flex gap-3 ms-1">
+      <a href="/about" class="header-link">О сервисе</a>
+      <a href="/features" class="header-link">Преимущества</a>
+      <a href="/contacts" class="header-link">Контакты</a>
+      <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
+      <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
+    </nav>
+  </div>
+</header>
+<div style="height: 62px;"></div>
+<!-- /шапка -->
+
+<!-- SVG фон как на главной -->
+<div class="background-svg">
+    <svg class="svg-left" viewBox="0 0 300 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,0 Q150,200 0,400 Q150,600 0,900 L0,0 Z" fill="#e0f2fe"/>
+    </svg>
+    <svg class="svg-right" viewBox="0 0 300 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M300,0 Q150,200 300,400 Q150,600 300,900 L300,0 Z" fill="#f0fdf4"/>
+    </svg>
+</div>
+
+<div class="main-layout d-flex flex-row justify-content-center align-items-start">
+    <!-- Левая панель -->
+    <aside class="sidebar-left d-none d-lg-flex flex-column align-items-end pe-3">
+        <div class="sidebar-block mb-4 animate__animated animate__fadeInLeft">
+            <h6 class="fw-bold mb-2"><i class="fa-solid fa-lightbulb me-1 text-warning"></i>Советы по связи</h6>
+            <ul class="tips-list small">
+                <li>Для быстрого ответа укажите тему сообщения</li>
+                <li>Опишите проблему максимально подробно</li>
+                <li>Приложите скриншоты при необходимости</li>
+                <li>Укажите ваш email для обратной связи</li>
+            </ul>
+        </div>
+        <div class="sidebar-block animate__animated animate__fadeInLeft animate__delay-1s">
+            <h6 class="fw-bold mb-2"><i class="fa-solid fa-clock me-1 text-primary"></i>Время работы</h6>
+            <div class="work-hours">
+                <div class="work-day">
+                    <span>Понедельник - Пятница</span>
+                    <span class="work-time">10:00 - 19:00</span>
+                </div>
+                <div class="work-day">
+                    <span>Суббота</span>
+                    <span class="work-time">11:00 - 16:00</span>
+                </div>
+                <div class="work-day">
+                    <span>Воскресенье</span>
+                    <span class="work-time text-danger">Выходной</span>
+                </div>
+            </div>
+            <div class="mt-3">
+                <a href="#" class="btn btn-sm btn-outline-primary w-100" data-bs-toggle="modal" data-bs-target="#holidaysModal">
+                    <i class="fa-solid fa-calendar-days me-1"></i>График праздников
+                </a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Центральный блок -->
+    <main class="main-content flex-grow-1">
+        <!-- Герой-секция -->
+        <section class="contacts-hero text-center animate__animated animate__fadeIn">
+            <div class="contacts-icon mb-3">
+                <i class="fa-solid fa-headset fa-3x text-primary"></i>
+            </div>
+            <h1 class="section-title mb-2">Свяжитесь с нами</h1>
+            <p class="lead text-secondary mb-4">Мы всегда рады вашим вопросам, предложениям и отзывам. Выберите удобный способ связи или заполните форму — ответим в течение 1 часа!</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="#contact-form" class="btn btn-primary btn-lg px-4">
+                    <i class="fa-solid fa-paper-plane me-2"></i>Написать нам
+                </a>
+                <a href="tel:+79991234567" class="btn btn-outline-primary btn-lg px-4">
+                    <i class="fa-solid fa-phone me-2"></i>Позвонить
+                </a>
+            </div>
+        </section>
+
+        <!-- Основные контакты -->
+        <section class="contacts-grid row g-4 mb-5 animate__animated animate__fadeIn animate__delay-1s">
+            <div class="col-md-6">
+                <div class="contacts-card h-100">
+                    <div class="contacts-card-icon bg-primary-light">
+                        <i class="fa-solid fa-envelope text-primary"></i>
+                    </div>
+                    <h3 class="contacts-card-title">Электронная почта</h3>
+                    <div class="contacts-card-content">
+                        <p>Основной канал связи для любых вопросов</p>
+                        <a href="mailto:support@gpt4gen.site" class="contacts-card-link">support@gpt4gen.site</a>
+                        <p class="small text-muted mt-2">Обычный ответ в течение 1-2 часов</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="contacts-card h-100">
+                    <div class="contacts-card-icon bg-success-light">
+                        <i class="fa-solid fa-phone text-success"></i>
+                    </div>
+                    <h3 class="contacts-card-title">Телефон и чат</h3>
+                    <div class="contacts-card-content">
+                        <p>Техническая поддержка и консультации</p>
+                        <a href="tel:+79991234567" class="contacts-card-link">+7 (999) 123-45-67</a>
+                        <p class="small text-muted mt-2">Пн-Пт: 10:00-19:00 по МСК</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="contacts-card h-100">
+                    <div class="contacts-card-icon bg-warning-light">
+                        <i class="fa-solid fa-location-dot text-warning"></i>
+                    </div>
+                    <h3 class="contacts-card-title">Офис в Москве</h3>
+                    <div class="contacts-card-content">
+                        <p>Россия, Москва, ул. Примерная, 1</p>
+                        <p class="small text-muted mt-2">Вход по предварительной записи</p>
+                        <a href="#map" class="btn btn-sm btn-outline-primary mt-2">Посмотреть на карте</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="contacts-card h-100">
+                    <div class="contacts-card-icon bg-info-light">
+                        <i class="fa-solid fa-comments text-info"></i>
+                    </div>
+                    <h3 class="contacts-card-title">Социальные сети</h3>
+                    <div class="contacts-card-content">
+                        <p>Следите за обновлениями и пишите нам</p>
+                        <div class="contacts-socials mt-3">
+                            <a href="https://t.me/gpt4gen" class="social-btn telegram" target="_blank" title="Telegram"><i class="fa-brands fa-telegram"></i></a>
+                            <a href="https://vk.com/gpt4gen" class="social-btn vk" target="_blank" title="VK"><i class="fa-brands fa-vk"></i></a>
+                            <a href="https://wa.me/79991234567" class="social-btn whatsapp" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+                            <a href="https://github.com/gpt4gen" class="social-btn github" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Карта -->
+        <section id="map" class="contacts-map mb-5 animate__animated animate__fadeIn animate__delay-1s">
+            <h2 class="section-subtitle mb-3"><i class="fa-solid fa-map-location-dot me-2"></i>Мы на карте</h2>
+            <div class="map-container rounded-4 shadow-sm overflow-hidden">
+                <iframe src="https://yandex.ru/map-widget/v1/?um=constructor%3A3b1b1e2e1e2e1e2e1e2e1e2e1e2e1e2e&amp;source=constructor" width="100%" height="400" frameborder="0" allowfullscreen></iframe>
+            </div>
+            <div class="map-actions mt-3 d-flex justify-content-between">
+                <a href="https://yandex.ru/maps/?pt=37.6176,55.7558&z=15&l=map" target="_blank" class="btn btn-outline-primary">
+                    <i class="fa-solid fa-arrow-up-right-from-square me-2"></i>Открыть в Яндекс.Картах
+                </a>
+                <a href="https://maps.apple.com/?ll=55.7558,37.6176&q=Офис GPT-4 Генератор" target="_blank" class="btn btn-outline-primary">
+                    <i class="fa-brands fa-apple me-2"></i>Открыть в Apple Maps
+                </a>
+            </div>
+        </section>
+
+        <!-- Форма обратной связи -->
+        <section id="contact-form" class="contacts-form mb-5 animate__animated animate__fadeIn animate__delay-2s">
+            <h2 class="section-subtitle mb-4"><i class="fa-solid fa-envelope-open-text me-2"></i>Форма обратной связи</h2>
+            <form class="needs-validation" novalidate>
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label for="name" class="form-label">Ваше имя</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-user"></i></span>
+                            <input type="text" class="form-control" id="name" placeholder="Иван Иванов" required>
+                            <div class="invalid-feedback">Пожалуйста, введите ваше имя</div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email</label>
+                        <div class="input-group">
+                            <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+                            <input type="email" class="form-control" id="email" placeholder="you@example.com" required>
+                            <div class="invalid-feedback">Пожалуйста, введите корректный email</div>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        <label for="subject" class="form-label">Тема сообщения</label>
+                        <select class="form-select" id="subject" required>
+                            <option value="" selected disabled>Выберите тему...</option>
+                            <option>Техническая поддержка</option>
+                            <option>Вопрос по оплате</option>
+                            <option>Предложение сотрудничества</option>
+                            <option>Другое</option>
+                        </select>
+                        <div class="invalid-feedback">Пожалуйста, выберите тему сообщения</div>
+                    </div>
+                    <div class="col-12">
+                        <label for="message" class="form-label">Сообщение</label>
+                        <textarea class="form-control" id="message" rows="5" placeholder="Опишите ваш вопрос или предложение..." required></textarea>
+                        <div class="invalid-feedback">Пожалуйста, введите ваше сообщение</div>
+                    </div>
+                    <div class="col-12">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="consent" required>
+                            <label class="form-check-label small" for="consent">
+                                Я согласен на обработку персональных данных в соответствии с <a href="#" data-bs-toggle="modal" data-bs-target="#privacyModal">Политикой конфиденциальности</a>
+                            </label>
+                            <div class="invalid-feedback">Необходимо ваше согласие</div>
+                        </div>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-lg mt-4 px-5" type="submit">
+                    <i class="fa-solid fa-paper-plane me-2"></i>Отправить сообщение
+                </button>
+            </form>
+            <div class="form-success alert alert-success mt-4 d-none">
+                <i class="fa-solid fa-circle-check me-2"></i>
+                <strong>Спасибо!</strong> Ваше сообщение успешно отправлено. Мы ответим вам в ближайшее время.
+            </div>
+        </section>
+
+        <!-- Частые вопросы -->
+        <section class="contacts-faq animate__animated animate__fadeIn animate__delay-2s">
+            <h2 class="section-subtitle mb-4"><i class="fa-solid fa-circle-question me-2"></i>Частые вопросы</h2>
+            <div class="accordion" id="faqAccordion">
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqHeading1">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse1" aria-expanded="false" aria-controls="faqCollapse1">
+                            <i class="fa-solid fa-clock me-2 text-primary"></i>Как быстро вы отвечаете на сообщения?
+                        </button>
+                    </h3>
+                    <div id="faqCollapse1" class="accordion-collapse collapse" aria-labelledby="faqHeading1" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>Мы стремимся отвечать на все обращения как можно быстрее:</p>
+                            <ul>
+                                <li>Электронная почта: в течение 1-2 часов в рабочее время</li>
+                                <li>Телефон/чат: мгновенно в часы работы (Пн-Пт 10:00-19:00 МСК)</li>
+                                <li>Социальные сети: в течение 2-4 часов</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqHeading2">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse2" aria-expanded="false" aria-controls="faqCollapse2">
+                            <i class="fa-solid fa-lock me-2 text-primary"></i>Как защищены мои данные?
+                        </button>
+                    </h3>
+                    <div id="faqCollapse2" class="accordion-collapse collapse" aria-labelledby="faqHeading2" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>Мы серьезно относимся к защите ваших данных:</p>
+                            <ul>
+                                <li>Все соединения защищены SSL-шифрованием</li>
+                                <li>Ваши данные не передаются третьим лицам</li>
+                                <li>Мы соблюдаем требования GDPR и российского законодательства</li>
+                                <li>Вы можете запросить удаление ваших данных в любое время</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqHeading3">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse3" aria-expanded="false" aria-controls="faqCollapse3">
+                            <i class="fa-solid fa-coins me-2 text-primary"></i>Есть ли у вас партнерская программа?
+                        </button>
+                    </h3>
+                    <div id="faqCollapse3" class="accordion-collapse collapse" aria-labelledby="faqHeading3" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>Да, у нас есть выгодная партнерская программа с комиссией до 30%:</p>
+                            <ul>
+                                <li>Регистрация в партнерской программе бесплатна</li>
+                                <li>Вы получаете уникальную реферальную ссылку</li>
+                                <li>Доступ к статистике в реальном времени</li>
+                                <li>Выплаты 2 раза в месяц</li>
+                            </ul>
+                            <a href="#" class="btn btn-sm btn-primary mt-2">Узнать подробнее</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <h3 class="accordion-header" id="faqHeading4">
+                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse4" aria-expanded="false" aria-controls="faqCollapse4">
+                            <i class="fa-solid fa-briefcase me-2 text-primary"></i>Как с вами сотрудничать?
+                        </button>
+                    </h3>
+                    <div id="faqCollapse4" class="accordion-collapse collapse" aria-labelledby="faqHeading4" data-bs-parent="#faqAccordion">
+                        <div class="accordion-body">
+                            <p>Мы открыты к различным формам сотрудничества:</p>
+                            <ul>
+                                <li><strong>Для веб-студий:</strong> специальные тарифы и API доступ</li>
+                                <li><strong>Для блогеров:</strong> партнерская программа и эксклюзивные условия</li>
+                                <li><strong>Для инвесторов:</strong> возможность участия в развитии проекта</li>
+                                <li><strong>Для HR:</strong> вакансии и стажировки в нашей команде</li>
+                            </ul>
+                            <p>Отправьте нам запрос через форму обратной связи, указав "Предложение о сотрудничестве".</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Кнопка возврата -->
+        <div class="text-center mt-5">
+            <a href="/" class="btn btn-outline-primary btn-lg px-5">
+                <i class="fa-solid fa-arrow-left me-2"></i>Вернуться на главную
+            </a>
+        </div>
+    </main>
+
+    <!-- Правая панель -->
+    <aside class="sidebar-right d-none d-xl-flex flex-column align-items-start ps-3">
+        <div class="sidebar-block mb-4 animate__animated animate__fadeInRight">
+            <h6 class="fw-bold mb-2"><i class="fa-solid fa-users me-1 text-info"></i>Наша команда</h6>
+            <div class="team-member d-flex align-items-center mb-3">
+                <div class="team-avatar me-2">
+                    <i class="fa-solid fa-user-tie text-primary"></i>
+                </div>
+                <div>
+                    <div class="fw-bold">Алексей Петров</div>
+                    <div class="small text-muted">Техническая поддержка</div>
+                </div>
+            </div>
+            <div class="team-member d-flex align-items-center mb-3">
+                <div class="team-avatar me-2">
+                    <i class="fa-solid fa-user-gear text-success"></i>
+                </div>
+                <div>
+                    <div class="fw-bold">Мария Сидорова</div>
+                    <div class="small text-muted">Менеджер по развитию</div>
+                </div>
+            </div>
+            <div class="team-member d-flex align-items-center">
+                <div class="team-avatar me-2">
+                    <i class="fa-solid fa-user-astronaut text-warning"></i>
+                </div>
+                <div>
+                    <div class="fw-bold">Кануркин Максим</div>
+                    <div class="small text-muted">Главный разработчик</div>
+                </div>
+            </div>
+        </div>
+        <div class="sidebar-block animate__animated animate__fadeInRight animate__delay-1s">
+            <h6 class="fw-bold mb-2"><i class="fa-solid fa-trophy me-1 text-warning"></i>Наши достижения</h6>
+            <div class="achievement d-flex align-items-start mb-3">
+                <div class="achievement-icon me-2">
+                    <i class="fa-solid fa-medal text-primary"></i>
+                </div>
+                <div>
+                    <div class="fw-bold">Лучший стартап по нашему мнению</div>
+                    <div class="small text-muted">Премия GenSite</div>
+                </div>
+            </div>
+            <div class="achievement d-flex align-items-start mb-3">
+                <div class="achievement-icon me-2">
+                    <i class="fa-solid fa-star text-success"></i>
+                </div>
+                <div>
+                    <div class="fw-bold">1 000+ пользователей</div>
+                    <div class="small text-muted">Создано 3 000+ сайтов</div>
+                </div>
+            </div>
+            <div class="achievement d-flex align-items-start">
+                <div class="achievement-icon me-2">
+                    <i class="fa-solid fa-heart text-danger"></i>
+                </div>
+                <div>
+                    <div class="fw-bold">98% довольных клиентов</div>
+                    <div class="small text-muted">По отзывам</div>
+                </div>
+            </div>
+        </div>
+    </aside>
+</div>
+
+<!-- Модальное окно политики конфиденциальности -->
+<div class="modal fade" id="privacyModal" tabindex="-1" aria-labelledby="privacyModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header bg-primary text-white">
+        <h5 class="modal-title" id="privacyModalLabel"><i class="fa-solid fa-shield-halved me-2"></i>Политика конфиденциальности</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="privacy-content">
+            <h4>1. Общие положения</h4>
+            <p>Настоящая Политика конфиденциальности регулирует порядок обработки и использования персональных данных пользователей сервиса "GPT-4 Генератор".</p>
+            
+            <h4 class="mt-4">2. Какие данные мы собираем</h4>
+            <p>Мы можем собирать следующую информацию:</p>
+            <ul>
+                <li>Контактные данные (имя, email, телефон)</li>
+                <li>Технические данные (IP-адрес, тип браузера, устройство)</li>
+                <li>Данные об использовании сервиса (время сеанса, страницы)</li>
+            </ul>
+            
+            <h4 class="mt-4">3. Как мы используем данные</h4>
+            <p>Собранные данные используются для:</p>
+            <ul>
+                <li>Предоставления и улучшения наших услуг</li>
+                <li>Обратной связи с пользователями</li>
+                <li>Анализа использования сервиса</li>
+                <li>Предотвращения мошенничества</li>
+            </ul>
+            
+            <h4 class="mt-4">4. Защита данных</h4>
+            <p>Мы применяем различные меры безопасности для защиты ваших данных:</p>
+            <ul>
+                <li>Шифрование передаваемых данных</li>
+                <li>Регулярное обновление систем защиты</li>
+                <li>Ограниченный доступ к данным</li>
+            </ul>
+            
+            <h4 class="mt-4">5. Ваши права</h4>
+            <p>Вы имеете право:</p>
+            <ul>
+                <li>Запросить доступ к вашим данным</li>
+                <li>Исправить неточности в данных</li>
+                <li>Запросить удаление данных</li>
+                <li>Отозвать согласие на обработку</li>
+            </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Я понял</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Модальное окно праздничных дней -->
+<div class="modal fade" id="holidaysModal" tabindex="-1" aria-labelledby="holidaysModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header bg-warning text-white">
+        <h5 class="modal-title" id="holidaysModalLabel"><i class="fa-solid fa-calendar-days me-2"></i>График работы в праздники</h5>
+        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="holidays-list">
+            <div class="holiday-item mb-3">
+                <div class="fw-bold">1 января - 8 января</div>
+                <div class="text-muted small">Новогодние каникулы - не работаем</div>
+            </div>
+            <div class="holiday-item mb-3">
+                <div class="fw-bold">23 февраля</div>
+                <div class="text-muted small">День защитника Отечества - не работаем</div>
+            </div>
+            <div class="holiday-item mb-3">
+                <div class="fw-bold">8 марта</div>
+                <div class="text-muted small">Международный женский день - не работаем</div>
+            </div>
+            <div class="holiday-item mb-3">
+                <div class="fw-bold">1 мая</div>
+                <div class="text-muted small">Праздник Весны и Труда - не работаем</div>
+            </div>
+            <div class="holiday-item mb-3">
+                <div class="fw-bold">9 мая</div>
+                <div class="text-muted small">День Победы - не работаем</div>
+            </div>
+            <div class="holiday-item">
+                <div class="fw-bold">12 июня</div>
+                <div class="text-muted small">День России - не работаем</div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-warning" data-bs-dismiss="modal">Закрыть</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Подключаем скрипты -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
+<script>
+// Валидация формы
+(function () {
+  'use strict'
+  const forms = document.querySelectorAll('.needs-validation')
+  Array.from(forms).forEach(function (form) {
+    form.addEventListener('submit', function (event) {
+      if (!form.checkValidity()) {
+        event.preventDefault()
+        event.stopPropagation()
+      } else {
+        event.preventDefault()
+        form.classList.add('was-validated')
+        document.querySelector('.form-success').classList.remove('d-none')
+        form.reset()
+        form.classList.remove('was-validated')
+        setTimeout(() => {
+            document.querySelector('.form-success').classList.add('d-none')
+        }, 5000)
+      }
+    }, false)
+  })
+})()
+
+// Плавная прокрутка к якорям
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault()
+        const target = document.querySelector(this.getAttribute('href'))
+        if (target) {
+            window.scrollTo({
+                top: target.offsetTop - 80,
+                behavior: 'smooth'
+            })
+        }
+    })
+})
+</script>
 </body>
-</html> 
+</html>

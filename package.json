@@ -1,5 +1,14 @@
 {
+  "name": "gene-js",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
   "dependencies": {
-    "vercel": "^44.2.8"
+    "express": "^4.18.2",
+    "dotenv": "^16.3.1",
+    "@supabase/supabase-js": "^2.39.5"
   }
 }

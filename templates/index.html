@@ -5,36 +5,35 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Генератор сайтов на GPT-4</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <link rel="icon" href="{{ url_for('static', filename='extension_icon.png') }}">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="icon" href="/public/img/extension_icon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
 <body>
 <!-- Компактная премиальная шапка -->
-<header class="header-glass-premium fixed-top animate__animated animate__fadeInDown">
+<header class="header-glass-premium fixed-top">
   <div class="container-fluid d-flex align-items-center justify-content-between py-2 px-3 flex-wrap">
     <div class="d-flex align-items-center gap-3">
-      <div class="header-logo-premium d-flex align-items-center justify-content-center me-2 animate__animated animate__fadeInLeft animate__delay-1s">
+      <div class="header-logo-premium d-flex align-items-center justify-content-center me-2">
         <i class="fa-solid fa-robot fa-lg text-primary"></i>
       </div>
-      <div class="d-flex flex-column animate__animated animate__fadeInLeft animate__delay-2s">
+      <div class="d-flex flex-column">
         <span class="fw-bold text-gradient-premium mb-0">GPT-4 Генератор</span>
-        <span class="text-secondary small lh-1 d-flex align-items-center gap-1"><i class="fa-solid fa-bolt text-warning"></i> GPT-4, генерация сайтов за 10 секунд, бесплатно</span>
+        <span class="text-secondary small lh-1 d-flex align-items-center gap-1">
+          <i class="fa-solid fa-bolt text-warning"></i> GPT-4, генерация сайтов за 10 секунд, бесплатно
+        </span>
       </div>
     </div>
-    <nav class="header-menu d-none d-md-flex gap-3 ms-3 animate__animated animate__fadeIn animate__delay-3s">
+    <nav class="header-menu d-flex gap-3 ms-1" id="authButtons">
       <a href="/about" class="header-link">О сервисе</a>
       <a href="/features" class="header-link">Преимущества</a>
       <a href="/contacts" class="header-link">Контакты</a>
+      <a href="#" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa-solid fa-right-to-bracket"></i> Войти</a>
+      <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#registerModal"><i class="fa-solid fa-user-plus"></i> Регистрация</a>
     </nav>
-    <div class="d-flex align-items-center gap-2 ms-auto animate__animated animate__fadeInRight animate__delay-2s" style="padding-right: 10px;">
-      {% if current_user.is_authenticated %}
-        <span class="me-2 d-none d-md-inline text-dark-emphasis">👋 {{ current_user.email }}</span>
-        <a href="/logout" class="btn btn-outline-danger btn-sm px-3 premium-btn-shadow"><i class="fa-solid fa-right-from-bracket me-1"></i>Выйти</a>
-      {% else %}
-        <button class="btn btn-premium-outline btn-sm px-3 premium-btn-shadow" data-bs-toggle="modal" data-bs-target="#loginModal"><i class="fa-solid fa-right-to-bracket me-1"></i>Войти</button>
-        <button class="btn btn-premium-gradient btn-sm px-3 premium-btn-shadow" data-bs-toggle="modal" data-bs-target="#registerModal"><i class="fa-solid fa-user-plus me-1"></i>Регистрация</button>
-      {% endif %}
+    <div id="userStatus" class="d-none align-items-center gap-3">
+      <span id="usernameDisplay" class="fw-bold text-primary"></span>
+      <button id="logoutBtn" class="btn btn-outline-danger btn-sm"><i class="fa-solid fa-right-from-bracket"></i> Выйти</button>
     </div>
   </div>
 </header>
@@ -115,7 +114,7 @@
                     <button id="generateBtn" class="btn btn-primary d-flex align-items-center" type="button">
                         <i class="fa-solid fa-wand-magic-sparkles me-2"></i>Сгенерировать
                     </button>
-                    <button id="downloadBtn" class="btn btn-success d-flex align-items-center" type="button" disabled>
+                    <button id="downloadBtn" class="btn btn-success d-flex align-items-center" type="button">
                         <i class="fa-solid fa-download me-2"></i>Скачать HTML
                     </button>
                 </div>
@@ -129,7 +128,7 @@
         </section>
         <footer class="text-center mt-4 mb-2 text-secondary small">
             <hr>
-            <div>© 2024 Генератор сайтов на GPT-4 | <i class="fa-brands fa-github"></i> <a href="https://platform.openai.com/" target="_blank" class="text-decoration-none">OpenAI API</a></div>
+            <div>© 2025 Генератор сайтов на GPT-4 | <i class="fa-brands fa-github"></i> <a href="https://platform.openai.com/" target="_blank" class="text-decoration-none">OpenAI API</a></div>
         </footer>
     </main>
     <!-- Правая панель -->
@@ -144,52 +143,104 @@
                 <li>Мгновенная генерация сайта</li>
                 <li>Современный UI/UX</li>
                 <li>Готовый HTML для скачивания</li>
-                <li>Без регистрации и рекламы</li>
+                <li>Без рекламы</li>
             </ul>
         </div>
     </aside>
 </div>
-<!-- Модальное окно оплаты -->
+
+<!-- Премиальное модальное окно оплаты -->
 <div class="modal fade" id="payModal" tabindex="-1" aria-labelledby="payModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content pay-modal-content">
-      <div class="modal-header border-0 pb-0" style="background: linear-gradient(90deg, #3b82f6 30%, #06b6d4 100%); border-top-left-radius: 1.2rem; border-top-right-radius: 1.2rem;">
+    <div class="modal-content premium-pay-modal animate__animated animate__fadeInDown">
+      <div class="modal-header border-0 position-relative">
         <div class="w-100 text-center">
-          <i class="fa-solid fa-credit-card fa-3x text-white mb-2"></i>
-          <h5 class="modal-title text-white fw-bold" id="payModalLabel">Доступ к генерации сайта</h5>
+          <div class="premium-pay-icon mb-3">
+            <i class="fa-solid fa-crown"></i>
+          </div>
+          <h4 class="modal-title fw-bold text-gradient-premium" id="payModalLabel">Премиум доступ</h4>
+          <p class="text-muted mb-0 small">Для скачивания HTML-файла требуется активация премиум доступа</p>
         </div>
-        <button type="button" class="btn-close btn-close-white position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+        <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Закрыть"></button>
       </div>
-      <div class="modal-body text-center py-4">
-        <div class="mb-3">
-          <div class="pay-badge mb-2"><i class="fa-solid fa-lock"></i> Премиум-доступ</div>
-          <div class="mb-2 text-secondary">Генерация сайта доступна только после оплаты.<br>Выберите количество генераций:</div>
-          <div class="d-flex justify-content-center gap-2 mb-3">
-            <button type="button" class="btn btn-outline-primary pay-count-btn" data-count="1">1</button>
-            <button type="button" class="btn btn-outline-primary pay-count-btn" data-count="3">3</button>
-            <button type="button" class="btn btn-outline-primary pay-count-btn" data-count="5">5</button>
+      <div class="modal-body p-4 pt-2">
+        <div class="premium-pay-card mb-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h5 class="fw-bold mb-0">Выберите тариф:</h5>
+            <span class="badge bg-primary bg-opacity-10 text-primary">Экономия до 30%</span>
           </div>
-          <div class="mb-3">
-            <span class="fs-5">Итого: </span>
-            <span class="fs-4 fw-bold" id="payTotal">199</span>
-            <span class="fs-6">₽</span>
-            <span class="text-muted small ms-2" id="payPer">(1 × 199₽)</span>
+          
+          <div class="row g-3 mb-4">
+            <div class="col-4">
+              <div class="pay-option" data-count="1" data-price="199">
+                <div class="pay-option-inner">
+                  <div class="pay-option-count">1 генерация</div>
+                  <div class="pay-option-price">199 ₽</div>
+                  <div class="pay-option-per">199 ₽/шт</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="pay-option active" data-count="3" data-price="499">
+                <div class="pay-option-inner">
+                  <div class="pay-option-badge">Выгодно</div>
+                  <div class="pay-option-count">3 генерации</div>
+                  <div class="pay-option-price">499 ₽</div>
+                  <div class="pay-option-per">166 ₽/шт</div>
+                </div>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="pay-option" data-count="5" data-price="699">
+                <div class="pay-option-inner">
+                  <div class="pay-option-badge">Лучшая цена</div>
+                  <div class="pay-option-count">5 генераций</div>
+                  <div class="pay-option-price">699 ₽</div>
+                  <div class="pay-option-per">140 ₽/шт</div>
+                </div>
+              </div>
+            </div>
           </div>
-          <button id="payBtn" class="btn btn-success btn-lg px-5 py-2 pay-btn-animate"><i class="fa-solid fa-money-bill-wave me-2"></i>Оплатить</button>
+          
+          <div class="premium-pay-total mb-4">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="text-muted">Итого к оплате:</span>
+              <div class="text-end">
+                <div class="pay-total-price">499 ₽</div>
+                <div class="pay-total-save small text-success">Экономия 98 ₽</div>
+              </div>
+            </div>
+          </div>
+          
+          <button id="payBtn" class="btn btn-premium-gradient w-100 py-3 fw-bold">
+            <i class="fa-solid fa-lock me-2"></i>Оплатить 499 ₽
+          </button>
         </div>
-        <div class="text-start mt-4 pay-benefits">
-          <div class="fw-bold mb-2"><i class="fa-solid fa-star text-warning me-1"></i>Преимущества:</div>
-          <ul class="mb-0 ps-3 small text-secondary">
-            <li>Мгновенная генерация сайта по вашему описанию</li>
-            <li>Современный UI/UX и адаптивная вёрстка</li>
-            <li>Готовый HTML-файл для скачивания</li>
-            <li>Без рекламы и регистрации</li>
+        
+        <div class="premium-pay-features">
+          <h6 class="fw-bold mb-3"><i class="fa-solid fa-medal text-warning me-2"></i>Преимущества премиум доступа:</h6>
+          <ul class="pay-features-list">
+            <li><i class="fa-solid fa-check-circle text-success me-2"></i>Мгновенная генерация сайта по вашему описанию</li>
+            <li><i class="fa-solid fa-check-circle text-success me-2"></i>Современный UI/UX и адаптивная вёрстка</li>
+            <li><i class="fa-solid fa-check-circle text-success me-2"></i>Готовый HTML-файл для скачивания</li>
+            <li><i class="fa-solid fa-check-circle text-success me-2"></i>Поддержка 24/7</li>
           </ul>
+          
+          <div class="pay-methods mt-4">
+            <div class="d-flex justify-content-center gap-3">
+              <div class="pay-method-icon"><i class="fa-brands fa-cc-visa"></i></div>
+              <div class="pay-method-icon"><i class="fa-brands fa-cc-mastercard"></i></div>
+              <div class="pay-method-icon"><i class="fa-brands fa-cc-paypal"></i></div>
+              <div class="pay-method-icon"><i class="fa-brands fa-apple-pay"></i></div>
+            </div>
+            <p class="text-center text-muted small mt-2">Все платежи защищены 256-битным SSL шифрованием</p>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
+
 <!-- Модальное окно входа (премиум, улучшено) -->
 <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -209,19 +260,12 @@
         <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Закрыть"></button>
       </div>
       <div class="modal-body p-4 pt-3">
-        <form method="POST" action="/login" autocomplete="off" novalidate>
-          {% with messages = get_flashed_messages() %}
-            {% if messages %}
-              <div class="alert alert-danger py-2 animate__animated animate__shakeX">
-                {% for message in messages %}{{ message }}<br>{% endfor %}
-              </div>
-            {% endif %}
-          {% endwith %}
+        <form autocomplete="off" novalidate>
           <div class="mb-3 position-relative animate__animated animate__fadeInUp animate__delay-1s">
-            <label for="loginEmail" class="form-label fw-semibold">Email</label>
+            <label for="loginLogin" class="form-label fw-semibold">Логин</label>
             <div class="input-group input-group-lg">
-              <span class="input-group-text"><i class="fa-solid fa-envelope text-primary"></i></span>
-              <input type="email" class="form-control glass-input" id="loginEmail" name="email" placeholder="Введите email" required autofocus>
+              <span class="input-group-text"><i class="fa-solid fa-user text-primary"></i></span>
+              <input type="text" class="form-control glass-input" id="loginLogin" name="login" placeholder="Введите логин" required autofocus>
             </div>
           </div>
           <div class="mb-3 position-relative animate__animated animate__fadeInUp animate__delay-2s">
@@ -241,6 +285,7 @@
     </div>
   </div>
 </div>
+
 <!-- Модальное окно регистрации (премиум, улучшено) -->
 <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
@@ -260,14 +305,14 @@
         <button type="button" class="btn-close position-absolute end-0 top-0 m-3" data-bs-dismiss="modal" aria-label="Закрыть"></button>
       </div>
       <div class="modal-body p-4 pt-3">
-        <form method="POST" action="/register" autocomplete="off" novalidate>
-          {% with messages = get_flashed_messages() %}
-            {% if messages %}
-              <div class="alert alert-danger py-2 animate__animated animate__shakeX">
-                {% for message in messages %}{{ message }}<br>{% endfor %}
-              </div>
-            {% endif %}
-          {% endwith %}
+        <form autocomplete="off" novalidate>
+          <div class="mb-3 position-relative animate__animated animate__fadeInUp animate__delay-1s">
+            <label for="registerLogin" class="form-label fw-semibold">Логин</label>
+            <div class="input-group input-group-lg">
+              <span class="input-group-text"><i class="fa-solid fa-user text-success"></i></span>
+              <input type="text" class="form-control glass-input" id="registerLogin" name="login" placeholder="Придумайте логин" required>
+            </div>
+          </div>
           <div class="mb-3 position-relative animate__animated animate__fadeInUp animate__delay-1s">
             <label for="registerEmail" class="form-label fw-semibold">Email</label>
             <div class="input-group input-group-lg">
@@ -293,11 +338,13 @@
     </div>
   </div>
 </div>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script>
 let isPaid = false;
-let payCount = 1;
+let payCount = 3;
+let payPrice = 499;
 const generateBtn = document.getElementById('generateBtn');
 const downloadBtn = document.getElementById('downloadBtn');
 const previewFrame = document.getElementById('previewFrame');
@@ -308,11 +355,6 @@ window.onload = () => {
 };
 
 generateBtn.onclick = async () => {
-    if (!isPaid) {
-        const payModal = new bootstrap.Modal(document.getElementById('payModal'));
-        payModal.show();
-        return;
-    }
     errorMsg.classList.add('d-none');
     generateBtn.disabled = true;
     downloadBtn.disabled = true;
@@ -341,37 +383,76 @@ generateBtn.onclick = async () => {
     generateBtn.innerHTML = '<i class="fa-solid fa-wand-magic-sparkles me-2"></i>Сгенерировать';
 };
 
-downloadBtn.onclick = () => {
+generateBtn.onclick = () => {
+    if (!isPaid) {
+        const payModal = new bootstrap.Modal(document.getElementById('payModal'));
+        payModal.show();
+        return;
+    }
     window.location = '/download';
 };
 
 // Оплата
-const payBtns = document.querySelectorAll('.pay-count-btn');
-const payTotal = document.getElementById('payTotal');
-const payPer = document.getElementById('payPer');
+const payOptions = document.querySelectorAll('.pay-option');
+const payTotalPrice = document.querySelector('.pay-total-price');
+const payTotalSave = document.querySelector('.pay-total-save');
 const payBtn = document.getElementById('payBtn');
-const PRICE = 199;
 
-payBtns.forEach(btn => {
-    btn.onclick = function() {
-        payBtns.forEach(b => b.classList.remove('active'));
+payOptions.forEach(option => {
+    option.addEventListener('click', function() {
+        payOptions.forEach(opt => opt.classList.remove('active'));
         this.classList.add('active');
-        payCount = parseInt(this.getAttribute('data-count'));
-        payTotal.textContent = payCount * PRICE;
-        payPer.textContent = `(${payCount} × ${PRICE}₽)`;
-    };
+        
+        payCount = parseInt(this.dataset.count);
+        payPrice = parseInt(this.dataset.price);
+        
+        // Обновляем итоговую сумму
+        payTotalPrice.textContent = payPrice + ' ₽';
+        
+        // Обновляем кнопку оплаты
+        payBtn.innerHTML = `<i class="fa-solid fa-lock me-2"></i>Оплатить ${payPrice} ₽`;
+        
+        // Рассчитываем экономию
+        const basePrice = 199 * payCount;
+        const save = basePrice - payPrice;
+        if (save > 0) {
+            payTotalSave.textContent = `Экономия ${save} ₽`;
+            payTotalSave.classList.remove('d-none');
+        } else {
+            payTotalSave.classList.add('d-none');
+        }
+    });
 });
-// По умолчанию активна 1 генерация
-payBtns[0].classList.add('active');
 
-payBtn.onclick = function() {
+payBtn.addEventListener('click', function() {
+    // Здесь должна быть логика оплаты
+    // После успешной оплаты:
     isPaid = true;
     const payModal = bootstrap.Modal.getInstance(document.getElementById('payModal'));
     payModal.hide();
+    
+    // Показываем уведомление об успешной оплате
+    const toast = document.createElement('div');
+    toast.className = 'position-fixed bottom-0 end-0 p-3';
+    toast.style.zIndex = '1100';
+    toast.innerHTML = `
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-success text-white">
+                <strong class="me-auto"><i class="fa-solid fa-check-circle me-2"></i>Оплата прошла успешно</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                Теперь вы можете скачать сгенерированный HTML-файл.
+            </div>
+        </div>
+    `;
+    document.body.appendChild(toast);
+    
+    // Автоматически скрываем через 5 секунд
     setTimeout(() => {
-        generateBtn.click();
-    }, 400);
-};
+        toast.remove();
+    }, 5000);
+});
 
 function insertPrompt(text) {
     document.getElementById('description').value = text;
@@ -450,6 +531,7 @@ function setupAnimatedModal(modalId) {
 }
 setupAnimatedModal('loginModal');
 setupAnimatedModal('registerModal');
+setupAnimatedModal('payModal');
 
 // Плавное уменьшение высоты и усиление blur/тени шапки при скролле
 window.addEventListener('scroll', function() {
@@ -461,54 +543,362 @@ window.addEventListener('scroll', function() {
     header.classList.remove('scrolled');
   }
 });
+
+document.querySelectorAll('[data-bs-toggle="modal"]').forEach(function(btn) {
+  btn.addEventListener('click', function(e) {
+    e.preventDefault();
+  });
+});
+
+// === АВТОРИЗАЦИЯ И РЕГИСТРАЦИЯ ===
+// Регистрация
+const registerForm = document.querySelector('#registerModal form');
+if (registerForm) {
+  registerForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const login = document.getElementById('registerLogin').value.trim();
+    const email = document.getElementById('registerEmail').value.trim();
+    const password = document.getElementById('registerPassword').value;
+    const btn = registerForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Регистрация...';
+    try {
+      const resp = await fetch('/api/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ login, email, password })
+      });
+      const data = await resp.json();
+      if (resp.ok) {
+        // Автоматический вход после регистрации
+        await loginAfterRegister(email, password);
+        const modal = bootstrap.Modal.getInstance(document.getElementById('registerModal'));
+        modal.hide();
+      } else {
+        showRegisterError(data.error || 'Ошибка регистрации');
+      }
+    } catch (err) {
+      showRegisterError('Ошибка соединения');
+    }
+    btn.disabled = false;
+    btn.innerHTML = 'Зарегистрироваться';
+  });
+}
+function showRegisterError(msg) {
+  let err = document.getElementById('registerError');
+  if (!err) {
+    err = document.createElement('div');
+    err.id = 'registerError';
+    err.className = 'alert alert-danger mt-2';
+    document.querySelector('#registerModal .modal-body').appendChild(err);
+  }
+  err.textContent = msg;
+}
+async function loginAfterRegister(email, password) {
+  // Для автологина после регистрации
+  await fetch('/api/login', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, password })
+  });
+}
+// Вход
+const loginForm = document.querySelector('#loginModal form');
+if (loginForm) {
+  loginForm.addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const login = document.getElementById('loginLogin').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const btn = loginForm.querySelector('button[type="submit"]');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Вход...';
+    try {
+      const resp = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ login, password })
+      });
+      const data = await resp.json();
+      if (resp.ok) {
+        const modal = bootstrap.Modal.getInstance(document.getElementById('loginModal'));
+        modal.hide();
+        setUserUI(data.login || login);
+      } else {
+        showLoginError(data.error || 'Ошибка входа');
+      }
+    } catch (err) {
+      showLoginError('Ошибка соединения');
+    }
+    btn.disabled = false;
+    btn.innerHTML = 'Войти';
+  });
+}
+function setUserUI(username) {
+    // Hide auth buttons, show user status
+    document.getElementById('authButtons').classList.add('d-none');
+    const userStatus = document.getElementById('userStatus');
+    userStatus.classList.remove('d-none');
+    userStatus.classList.add('d-flex');
+    document.getElementById('usernameDisplay').textContent = username;
+}
+
+// Logout functionality
+document.getElementById('logoutBtn')?.addEventListener('click', async function() {
+    try {
+        const response = await fetch('/api/logout', {
+            method: 'POST'
+        });
+        if (response.ok) {
+            // Hide user status, show auth buttons
+            document.getElementById('userStatus').classList.add('d-none');
+            document.getElementById('authButtons').classList.remove('d-none');
+            // Show success toast
+            showToast('Вы успешно вышли из системы', 'success');
+        } else {
+            const error = await response.json();
+            showToast(error.error || 'Ошибка при выходе', 'danger');
+        }
+    } catch (err) {
+        showToast('Ошибка соединения', 'danger');
+    }
+});
+async function checkAuthStatus() {
+    try {
+        const response = await fetch('/api/check-auth');
+        if (response.ok) {
+            const data = await response.json();
+            if (data.authenticated && data.username) {
+                setUserUI(data.username);
+            }
+        }
+    } catch (err) {
+        console.error('Auth check failed:', err);
+    }
+}
+
+// Helper function to show toast notifications
+function showToast(message, type = 'success') {
+    const toastContainer = document.createElement('div');
+    toastContainer.className = 'position-fixed bottom-0 end-0 p-3';
+    toastContainer.style.zIndex = '1100';
+    
+    toastContainer.innerHTML = `
+        <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-${type} text-white">
+                <strong class="me-auto">${type === 'success' ? 'Успех' : 'Ошибка'}</strong>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body">
+                ${message}
+            </div>
+        </div>
+    `;
+    
+    document.body.appendChild(toastContainer);
+    setTimeout(() => toastContainer.remove(), 5000);
+}
+
+window.addEventListener('DOMContentLoaded', checkAuthStatus);
 </script>
 <style>
-.pay-modal-content {
-  border-radius: 1.2rem;
-  overflow: hidden;
-  box-shadow: 0 8px 32px rgba(60, 72, 100, 0.18);
-  border: none;
+/* Стили для премиального модального окна оплаты */
+.premium-pay-modal {
+    border-radius: 1.4rem;
+    overflow: hidden;
+    box-shadow: 0 12px 48px rgba(59, 130, 246, 0.18);
+    border: none;
+    background: linear-gradient(135deg, #f8fafc 0%, #f0fdf4 100%);
 }
-.pay-badge {
-  display: inline-block;
-  background: linear-gradient(90deg, #3b82f6 60%, #06b6d4 100%);
-  color: #fff;
-  font-weight: 600;
-  border-radius: 1em;
-  padding: 0.35em 1.1em 0.35em 1em;
-  font-size: 1.08rem;
-  margin-bottom: 0.5em;
-  box-shadow: 0 2px 8px rgba(59,130,246,0.10);
+
+.premium-pay-modal .modal-header {
+    padding: 2rem 1.5rem 1.5rem;
+    background: linear-gradient(120deg, #e0f2fe 0%, #f0fdf4 100%);
+    border-bottom: 1px solid rgba(203, 213, 225, 0.3);
 }
-.pay-count-btn {
-  min-width: 54px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border-radius: 0.8em;
-  border-width: 2px;
-  transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+
+.premium-pay-icon {
+    width: 64px;
+    height: 64px;
+    margin: 0 auto;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 1.8rem;
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
 }
-.pay-count-btn.active, .pay-count-btn:active, .pay-count-btn:focus {
-  background: linear-gradient(90deg, #3b82f6 60%, #06b6d4 100%);
-  color: #fff;
-  border-color: #3b82f6;
-  box-shadow: 0 2px 8px rgba(59,130,246,0.10);
+
+.premium-pay-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 24px rgba(59, 130, 246, 0.1);
+    border: 1px solid rgba(203, 213, 225, 0.5);
 }
-.pay-btn-animate {
-  font-size: 1.15rem;
-  font-weight: 700;
-  border-radius: 0.9em;
-  box-shadow: 0 4px 16px rgba(34, 197, 94, 0.10);
-  transition: background 0.2s, transform 0.1s, box-shadow 0.2s;
+
+.pay-option {
+    cursor: pointer;
+    transition: all 0.3s ease;
+    height: 100%;
 }
-.pay-btn-animate:hover, .pay-btn-animate:focus {
-  background: linear-gradient(90deg, #16a34a 60%, #22c55e 100%);
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 8px 32px rgba(34, 197, 94, 0.18);
+
+.pay-option-inner {
+    background: white;
+    border-radius: 0.8rem;
+    padding: 1rem;
+    border: 2px solid #e2e8f0;
+    height: 100%;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
 }
-.pay-benefits ul {
-  margin-bottom: 0;
+
+.pay-option:hover .pay-option-inner {
+    border-color: #93c5fd;
+    box-shadow: 0 4px 16px rgba(147, 197, 253, 0.3);
+}
+
+.pay-option.active .pay-option-inner {
+    border-color: #3b82f6;
+    background: linear-gradient(135deg, #f0f9ff 0%, #f0fdf4 100%);
+    box-shadow: 0 4px 24px rgba(59, 130, 246, 0.2);
+}
+
+.pay-option-badge {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: #3b82f6;
+    color: white;
+    font-size: 0.7rem;
+    font-weight: 600;
+    padding: 0.2rem 0.5rem;
+    border-radius: 0 0.8rem 0 0.8rem;
+}
+
+.pay-option-count {
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.5rem;
+}
+
+.pay-option-price {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e40af;
+    margin-bottom: 0.2rem;
+}
+
+.pay-option-per {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.premium-pay-total {
+    background: #f8fafc;
+    border-radius: 0.8rem;
+    padding: 1rem;
+    border: 1px solid #e2e8f0;
+}
+
+.pay-total-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+.pay-total-save {
+    font-weight: 600;
+}
+
+.btn-premium-gradient {
+    background: linear-gradient(135deg, #3b82f6 0%, #22c55e 100%);
+    color: white;
+    border: none;
+    border-radius: 0.8rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+    padding: 0.8rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 16px rgba(59, 130, 246, 0.2);
+}
+
+.btn-premium-gradient:hover {
+    background: linear-gradient(135deg, #2563eb 0%, #16a34a 100%);
+    color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(59, 130, 246, 0.3);
+}
+
+.premium-pay-features {
+    margin-top: 1.5rem;
+    padding: 1rem;
+}
+
+.pay-features-list {
+    list-style: none;
+    padding-left: 0;
+}
+
+.pay-features-list li {
+    padding: 0.5rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.pay-methods {
+    margin-top: 1.5rem;
+}
+
+.pay-method-icon {
+    font-size: 1.8rem;
+    color: #64748b;
+    opacity: 0.8;
+    transition: all 0.3s ease;
+}
+
+.pay-method-icon:hover {
+    opacity: 1;
+    transform: translateY(-2px);
+}
+
+/* Анимации */
+@keyframes fadeInUpBtn {
+    0% { opacity: 0; transform: translateY(20px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Адаптивность */
+@media (max-width: 576px) {
+    .premium-pay-modal {
+        border-radius: 1rem;
+    }
+    
+    .premium-pay-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.4rem;
+    }
+    
+    .pay-option-count {
+        font-size: 0.9rem;
+    }
+    
+    .pay-option-price {
+        font-size: 1.1rem;
+    }
+    
+    .pay-total-price {
+        font-size: 1.3rem;
+    }
+    
+    .btn-premium-gradient {
+        font-size: 1rem;
+        padding: 0.7rem;
+    }
 }
 </style>
 </body>
-</html> 
+</html>
